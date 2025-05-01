@@ -47,4 +47,3 @@ Feel free to explore the folders and leave feedback, suggestions, or issues.
 
 ---
 
-> _Built with ❤️ by [Ananthan-didnot](https://github.com/Ananthan-didnot)_

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Cosmic Story Generator</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;600;900&display=swap');
+      
+      :root {
+        --bg-color: #0c0e16;
+        --text-color: #e2e8f0;
+        --accent-color: #00ffaa;
+        --secondary-color: #6b21a8;
+        --dark-accent: #051014;
+        --highlight: #ff3e80;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: 'Space Mono', monospace;
+        background-color: var(--bg-color);
+        background-image: 
+          radial-gradient(circle at 20% 30%, rgba(107, 33, 168, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(0, 255, 170, 0.1) 0%, transparent 40%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text-color);
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23182334' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.4;
+        z-index: -1;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 30px;
+        width: 90%;
+        max-width: 1000px;
+        position: relative;
+      }
+
+      .cosmic-panel {
+        background-color: rgba(12, 14, 22, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 255, 170, 0.3);
+        border-radius: 4px;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cosmic-panel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent-color), var(--highlight));
+      }
+
+      .control-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .story-display {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+        position: relative;
+      }
+
+      h1::before {
+        content: ">";
+        position: absolute;
+        left: -20px;
+        color: var(--highlight);
+        animation: blink 1.5s infinite;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 5px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        background-color: rgba(5, 16, 20, 0.5);
+        border: 1px solid rgba(0, 255, 170, 0.3);
+        padding: 12px 15px;
+        color: var(--text-color);
+        font-family: 'Space Mono', monospace;
+        border-radius: 0;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+      }
+
+      .region-selector {
+        margin: 20px 0;
+      }
+
+      .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 60px;
+        height: 30px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(5, 16, 20, 0.5);
+        border: 1px solid rgba(0, 255, 170, 0.3);
+        transition: .4s;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 3px;
+        background-color: var(--accent-color);
+        transition: .4s;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: var(--secondary-color);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(28px);
+        background-color: var(--highlight);
+      }
+
+      .toggle-labels {
+        display: flex;
+        justify-content: space-between;
+        width: 60px;
+        font-size: 0.75rem;
+        margin-top: 5px;
+      }
+
+      .cosmic-button {
+        background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+        color: var(--dark-accent);
+        border: none;
+        padding: 15px 25px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        margin-top: 15px;
+      }
+
+      .cosmic-button::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 20%;
+        height: 200%;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: rotate(30deg);
+        transition: all 0.6s ease;
+      }
+
+      .cosmic-button:hover::after {
+        left: 120%;
+      }
+
+      .cosmic-button:hover {
+        box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .cosmic-button:active {
+        transform: translateY(1px);
+      }
+
+      .cosmic-button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .story-container {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.6s ease;
+        background-color: rgba(5, 16, 20, 0.7);
+        border: 1px solid rgba(107, 33, 168, 0.5);
+        padding: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .story-container::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: 
+          linear-gradient(90deg, transparent 0%, rgba(255, 62, 128, 0.05) 50%, transparent 100%),
+          linear-gradient(180deg, transparent 0%, rgba(0, 255, 170, 0.05) 50%, transparent 100%);
+        animation: scanner 8s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes scanner {
+        0%, 100% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+      }
+
+      .story-container.visible {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .story-text {
+        position: relative;
+        z-index: 1;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 0.8rem;
+        color: rgba(226, 232, 240, 0.4);
+        padding: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+        }
+        
+        .cosmic-panel {
+          padding: 20px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .story-container {
+          min-height: 300px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="grid-container">
+      <div class="cosmic-panel control-panel">
+        <h1>Cosmic Tale Generator</h1>
+        
+        <div class="form-group">
+          <label for="customname">Character Designation:</label>
+          <input id="customname" type="text" placeholder="Enter subject name..." />
+        </div>
+        
+        <div class="region-selector">
+          <label>Dimensional Framework:</label>
+          <div class="toggle-wrapper">
+            <span>US</span>
+            <div class="toggle-switch">
+              <input type="checkbox" id="uk">
+              <span class="toggle-slider"></span>
+            </div>
+            <span>UK</span>
+          </div>
+        </div>
+        
+        <button class="cosmic-button randomize">Initialize Sequence</button>
+      </div>
+      
+      <div class="cosmic-panel story-display">
+        <div class="story-container story">
+          <div class="story-text"></div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      COSMIC TALE GENERATOR v2.1 - SUBSYSTEM OF THE GALACTIC NARRATIVE MATRIX
+    </footer>
+    
+    <script src="main.js"></script>
+  </body>
+</html>

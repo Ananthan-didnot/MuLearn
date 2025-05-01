@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Image Gallery</h1>
+        
+        <div class="controls">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+            <select id="filterSelect">
+                <option value="all">All Images</option>
+                <option value="nature">Nature</option>
+                <option value="city">City</option>
+                <option value="abstract">Abstract</option>
+            </select>
+        </div>
+        
+        <div class="gallery">
+            <!-- Images will be populated via JavaScript -->
+        </div>
+        
+        <div class="lightbox" id="lightbox">
+            <span class="close">&times;</span>
+            <img class="lightbox-content" id="lightboxImg">
+            <div class="caption" id="caption"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Bouncing Spheres</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <div class="controls">
+                <button id="addSphere">Add Sphere</button>
+                <button id="clearSpheres">Clear All</button>
+            </div>
+        </header>
+        <main>
+            <canvas id="bounceCanvas"></canvas>
+        </main>
+        <footer>
+            <div class="stats">
+                <span id="sphereCount">Spheres: 0</span>
+                <span id="fps">FPS: 60</span>
+            </div>
+            <p>Created with ❤️ &copy; 2025</p>
+        </footer>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

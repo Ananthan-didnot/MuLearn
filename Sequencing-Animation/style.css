@@ -1,0 +1,42 @@
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  }
+
+#alice-container {
+  width: 90vh;
+  display: grid;
+  place-items: center;
+  grid-template-areas:
+    "a1 . ."
+    ". a2 ."
+    ". . a3";
+  gap: 20px;
+}
+
+#alice1, #alice2, #alice3 {
+  width: 150px;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
+
+#alice1 {
+  grid-area: a1;
+}
+
+#alice2 {
+  grid-area: a2;
+}
+
+#alice3 {
+  grid-area: a3;
+}
+
+#alice1:hover, #alice2:hover, #alice3:hover {
+  transform: translateY(-10px);
+  filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2));
+}

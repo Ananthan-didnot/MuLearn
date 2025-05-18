@@ -6,7 +6,7 @@ import { getFirestore, connectFirestoreEmulator, enableIndexedDbPersistence } fr
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAXkLsRPislcx3wklP10dzaSjDZauEJh-w",
+  apiKey: "USE YOUR KEY",
   authDomain: "chatapp-a671c.firebaseapp.com",
   projectId: "chatapp-a671c",
   storageBucket: "chatapp-a671c.firebasestorage.app",
